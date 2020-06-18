@@ -117,7 +117,7 @@ namespace WindowsFramelessTerminal
             {
                 IntPtr currentWindow = GetForegroundWindow();
 
-                if (hold && currentWindow == hWnd)
+                if (isDraggingWindow && currentWindow == hWnd)
                 {
                     System.Drawing.Point xandy = GetCursorPosition();
                     MoveWindow(hWnd, xandy.X, xandy.Y, 200, 200, false);
@@ -154,7 +154,7 @@ namespace WindowsFramelessTerminal
 
             if(args.Key.ToString() == "LeftAlt")
             {
-                hold = !hold;
+                isDraggingWindow = !isDraggingWindow;
             }
         }
 
