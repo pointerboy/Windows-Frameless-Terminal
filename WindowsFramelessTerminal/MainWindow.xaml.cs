@@ -24,9 +24,10 @@ namespace WindowsFramelessTerminal
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    { 
+    {
+            
         public static IntPtr hWnd = FindWindow("mintty", null);
-        public static bool hold = false;
+        public static bool isDraggingWindow = false;
 
         [DllImport("USER32.DLL")]
         public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
@@ -110,17 +111,6 @@ namespace WindowsFramelessTerminal
             return lpPoint;
         }
 
-        static void KeyLoop()
-        {
-            ConsoleKeyInfo keyinfo;
-            do
-            {
-                keyinfo = Console.ReadKey();
-                hold = !hold;
-                Console.WriteLine(keyinfo.Key + " was pressed");
-            }
-            while (keyinfo.Key != ConsoleKey.X);
-        }
         static void Loop()
         {
             while (true)
@@ -137,10 +127,15 @@ namespace WindowsFramelessTerminal
                 EnableWindow(currentWindow, true);
             }
         }
+        KeyboardListener KListener = new KeyboardListener();
         public MainWindow()
         {
+            KListener.KeyDown += new RawKeyEventHandler(KListener_KeyDown);
             InitializeComponent();
+        }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
             WindowsReStyle();
 
             IntPtr hWnd = FindWindow("mintty", null);
@@ -148,12 +143,25 @@ namespace WindowsFramelessTerminal
             if (hWnd != IntPtr.Zero)
             {
                 Thread loop = new Thread(Loop);
-                Thread loop_key = new Thread(KeyLoop);
-
-                loop_key.Start();
                 loop.Start();
             }
-
         }
+
+        void KListener_KeyDown(object sender, RawKeyEventArgs args)
+        {
+            Console.WriteLine(args.Key.ToString());
+            Console.WriteLine(args.ToString()); // Prints the text of pressed button, takes in account big and small letters. E.g. "Shift+a" => "A"
+
+            if(args.Key.ToString() == "LeftAlt")
+            {
+                hold = !hold;
+            }
+        }
+
+        private void Application_Exit(object sender, ExitEventArgs e)
+        {
+            KListener.Dispose();
+        }
+
     }
 }

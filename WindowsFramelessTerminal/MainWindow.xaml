@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WindowsFramelessTerminal"
         mc:Ignorable="d"
-        Title="MainWindow" Height="257" Width="374">
+        Title="Windows Frameless Terminal" Height="257" Width="374">
     <Grid Margin="0,0,2,4">
+        <Button Content="Start Watch&#xD;&#xA;" HorizontalAlignment="Left" Margin="85,10,0,0" VerticalAlignment="Top" Width="170" Height="20" Click="Button_Click"/>
 
     </Grid>
 </Window>
