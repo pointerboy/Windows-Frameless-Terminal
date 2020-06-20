@@ -20,5 +20,5 @@ You might your terminal better looking without the titlebar.
 
 # How do I get started?
 - Get a fresh build from releases page.
-- Open up config.json (create the file if it does not exist) and follow the easy configuration tutorial on the Wiki.
+- Open up config.json (create the file if it does not exist) and follow the easy configuration tutorial on the Wiki (https://github.com/pointerboy/Windows-Frameless-Terminal/wiki/Configuration).
 - Run the application and click 'Start Watch'
