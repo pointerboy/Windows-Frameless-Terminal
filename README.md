@@ -11,9 +11,11 @@ it allows dragging the window using a custom set key in the configuration file.
 # Why?
 You might your terminal better looking without the titlebar. 
 
-# Regularly maintained terminal emulators
-- Git Bash (mingw): <br>
-<img width=50% src="http://www.vanilla-remastered.com/files/term.PNG"><br>
+# Preview
+- Git Bash (MinGW): <br>
+<img src="http://www.vanilla-remastered.com/files/term.PNG"><br>
+<img src="http://www.vanilla-remastered.com/files/editor.gif"><br>
+
 (yes, that is the whole window)
 
 # How do I get started?
