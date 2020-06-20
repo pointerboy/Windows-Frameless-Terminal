@@ -26,6 +26,8 @@ namespace WindowsFramelessTerminal
         public static bool isDraggingWindow = false;
         public static System.Drawing.Rectangle CurrentWindowRectangle;
 
+        public static bool ui_FoundProcess;
+
         public static void WindowsReStyle()
         {
             Process[] Procs = Process.GetProcesses();
@@ -36,6 +38,8 @@ namespace WindowsFramelessTerminal
                     IntPtr pFoundWindow = proc.MainWindowHandle;
                     int style = WindowsAPI.GetWindowLong(pFoundWindow, WindowsAPI.GWL_STYLE);
                     WindowsAPI.SetWindowLong(pFoundWindow, WindowsAPI.GWL_STYLE, (style & ~WindowsAPI.WS_CAPTION));
+
+                    ui_FoundProcess = true;
                 }
             }
         }
@@ -71,6 +75,15 @@ namespace WindowsFramelessTerminal
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             WindowsReStyle();
+
+
+            if (!ui_FoundProcess)
+            {
+                MessageBox.Show("Could not find the process " + ConfigData.processName,
+                    "Windows Frameless Terminal", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+
+            }
 
             WindowPointer = WindowsAPI.FindWindow(ConfigData.processName, null);
 
