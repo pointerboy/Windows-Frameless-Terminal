@@ -19,15 +19,12 @@ using System.Windows.Shapes;
 
 namespace WindowsFramelessTerminal
 {
-   
-
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
             
         public static IntPtr hWnd = FindWindow("mintty", null);
         public static bool isDraggingWindow = false;
+        public static System.Drawing.Rectangle CurrentWindowRectangle;
 
         [DllImport("USER32.DLL")]
         public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
@@ -65,6 +62,9 @@ namespace WindowsFramelessTerminal
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint processId);
+
         public static void WindowsReStyle()
         {
             Process[] Procs = Process.GetProcesses();
@@ -94,6 +94,9 @@ namespace WindowsFramelessTerminal
             }
         }
 
+        [DllImport("user32.dll")]
+        private static extern int GetWindowRect(IntPtr hwnd, out System.Drawing.Rectangle rect);
+
         /// <summary>
         /// Retrieves the cursor's position, in screen coordinates.
         /// </summary>
@@ -103,6 +106,8 @@ namespace WindowsFramelessTerminal
         [DllImport("user32.dll")]
         static extern bool EnableWindow(IntPtr hWnd, bool enable);
 
+        [DllImport("user32.dll", EntryPoint = "SetWindowPos")]
+        public static extern IntPtr SetWindowPos(IntPtr hWnd, int hWndInsertAfter, int x, int Y, int cx, int cy, int wFlags);
 
         public static System.Drawing.Point GetCursorPosition()
         {
@@ -113,6 +118,9 @@ namespace WindowsFramelessTerminal
 
         static void Loop()
         {
+            System.Drawing.Rectangle win;
+            GetWindowRect(hWnd, out win);
+
             while (true)
             {
                 IntPtr currentWindow = GetForegroundWindow();
@@ -120,11 +128,8 @@ namespace WindowsFramelessTerminal
                 if (isDraggingWindow && currentWindow == hWnd)
                 {
                     System.Drawing.Point xandy = GetCursorPosition();
-                    MoveWindow(hWnd, xandy.X, xandy.Y, 200, 200, false);
-                    EnableWindow(currentWindow, false);
+                    MoveWindow(hWnd, xandy.X, xandy.Y, win.Width, win.Height, true);
                 }
-
-                EnableWindow(currentWindow, true);
             }
         }
         KeyboardListener KListener = new KeyboardListener();
@@ -140,18 +145,26 @@ namespace WindowsFramelessTerminal
 
             IntPtr hWnd = FindWindow("mintty", null);
 
+            System.Drawing.Rectangle test;
+            GetWindowRect(hWnd, out test);
+
+            SetWindowPos(hWnd, 0, test.X, test.Y, test.Width, test.Height-1, 0);
+
             if (hWnd != IntPtr.Zero)
             {
                 Thread loop = new Thread(Loop);
                 loop.Start();
             }
+
+            StartWatchBtn.IsEnabled = false;
+
+            uint processId;
+            GetWindowThreadProcessId(hWnd, out processId);
+            InfoLbl.Content = "Info: PID: " + Convert.ToString(processId);
         }
 
         void KListener_KeyDown(object sender, RawKeyEventArgs args)
         {
-            Console.WriteLine(args.Key.ToString());
-            Console.WriteLine(args.ToString()); // Prints the text of pressed button, takes in account big and small letters. E.g. "Shift+a" => "A"
-
             if(args.Key.ToString() == "LeftAlt")
             {
                 isDraggingWindow = !isDraggingWindow;
