@@ -22,8 +22,7 @@ namespace WindowsFramelessTerminal
 {
     public partial class MainWindow : Window
     {
-            
-        public static IntPtr hWnd = WindowsAPI.FindWindow("mintty", null);
+        public static IntPtr WindowPointer;
         public static bool isDraggingWindow = false;
         public static System.Drawing.Rectangle CurrentWindowRectangle;
 
@@ -32,7 +31,7 @@ namespace WindowsFramelessTerminal
             Process[] Procs = Process.GetProcesses();
             foreach (Process proc in Procs)
             {
-                if (proc.ProcessName.StartsWith("mintty"))
+                if (proc.ProcessName.StartsWith(ConfigData.process_name))
                 {
                     IntPtr pFoundWindow = proc.MainWindowHandle;
                     int style = WindowsAPI.GetWindowLong(pFoundWindow, WindowsAPI.GWL_STYLE);
@@ -43,16 +42,16 @@ namespace WindowsFramelessTerminal
         static void Loop()
         {
             System.Drawing.Rectangle win;
-            WindowsAPI.GetWindowRect(hWnd, out win);
+            WindowsAPI.GetWindowRect(WindowPointer, out win);
 
             while (true)
             {
                 IntPtr currentWindow = WindowsAPI.GetForegroundWindow();
 
-                if (isDraggingWindow && currentWindow == hWnd)
+                if (isDraggingWindow && currentWindow == WindowPointer)
                 {
                     System.Drawing.Point xandy = WindowsAPI.GetCursorPosition();
-                    WindowsAPI.MoveWindow(hWnd, xandy.X, xandy.Y, win.Width, win.Height, true);
+                    WindowsAPI.MoveWindow(WindowPointer, xandy.X, xandy.Y, win.Width, win.Height, true);
                 }
             }
         }
@@ -60,21 +59,26 @@ namespace WindowsFramelessTerminal
         public MainWindow()
         {
             KListener.KeyDown += new RawKeyEventHandler(KListener_KeyDown);
+            Config.ParseConfig();
+
             InitializeComponent();
+
+
+            ProcessLabel.Content = "Process name: " + ConfigData.process_name;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             WindowsReStyle();
 
-            IntPtr hWnd = WindowsAPI.FindWindow("mintty", null);
+            WindowPointer = WindowsAPI.FindWindow(ConfigData.process_name, null);
 
             System.Drawing.Rectangle test;
-            WindowsAPI.GetWindowRect(hWnd, out test);
+            WindowsAPI.GetWindowRect(WindowPointer, out test);
 
-            WindowsAPI.SetWindowPos(hWnd, 0, test.X, test.Y, test.Width, test.Height-1, 0);
+            WindowsAPI.SetWindowPos(WindowPointer, 0, test.X, test.Y, test.Width, test.Height-1, 0);
 
-            if (hWnd != IntPtr.Zero)
+            if (WindowPointer != IntPtr.Zero)
             {
                 Thread loop = new Thread(Loop);
                 loop.Start();
@@ -83,7 +87,7 @@ namespace WindowsFramelessTerminal
             StartWatchBtn.IsEnabled = false;
 
             uint processId;
-            WindowsAPI.GetWindowThreadProcessId(hWnd, out processId);
+            WindowsAPI.GetWindowThreadProcessId(WindowPointer, out processId);
             InfoLbl.Content = "Info: PID: " + Convert.ToString(processId);
         }
 

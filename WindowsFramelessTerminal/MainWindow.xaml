@@ -9,6 +9,7 @@
     <Grid Margin="0,0,2,4">
         <Button Name="StartWatchBtn" Content="Start Watch&#xD;&#xA;" HorizontalAlignment="Left" Margin="85,10,0,0" VerticalAlignment="Top" Width="170" Height="20" Click="Button_Click"/>
         <Label Name="InfoLbl" Content="Info:" HorizontalAlignment="Left" Margin="10,186,0,0" VerticalAlignment="Top"/>
+        <Label Name="ProcessLabel" Content="Label" HorizontalAlignment="Left" Margin="10,160,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
