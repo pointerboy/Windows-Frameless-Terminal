@@ -65,6 +65,7 @@ namespace WindowsFramelessTerminal
 
 
             ProcessLabel.Content = "Process name: " + ConfigData.processName;
+            MoveKeyLbl.Content += ConfigData.moveKey;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
