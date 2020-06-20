@@ -10,6 +10,7 @@ namespace WindowsFramelessTerminal
     [DataContract]
     class ConfigData
     {
-        [DataMember] public static string process_name { get; set; }
+        [DataMember] public static string processName { get; set; }
+        [DataMember] public static string moveKey { get; set; }
     }
 }

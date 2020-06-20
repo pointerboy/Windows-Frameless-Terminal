@@ -31,7 +31,7 @@ namespace WindowsFramelessTerminal
             Process[] Procs = Process.GetProcesses();
             foreach (Process proc in Procs)
             {
-                if (proc.ProcessName.StartsWith(ConfigData.process_name))
+                if (proc.ProcessName.StartsWith(ConfigData.processName))
                 {
                     IntPtr pFoundWindow = proc.MainWindowHandle;
                     int style = WindowsAPI.GetWindowLong(pFoundWindow, WindowsAPI.GWL_STYLE);
@@ -64,14 +64,14 @@ namespace WindowsFramelessTerminal
             InitializeComponent();
 
 
-            ProcessLabel.Content = "Process name: " + ConfigData.process_name;
+            ProcessLabel.Content = "Process name: " + ConfigData.processName;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             WindowsReStyle();
 
-            WindowPointer = WindowsAPI.FindWindow(ConfigData.process_name, null);
+            WindowPointer = WindowsAPI.FindWindow(ConfigData.processName, null);
 
             System.Drawing.Rectangle test;
             WindowsAPI.GetWindowRect(WindowPointer, out test);
@@ -93,7 +93,7 @@ namespace WindowsFramelessTerminal
 
         void KListener_KeyDown(object sender, RawKeyEventArgs args)
         {
-            if(args.Key.ToString() == "LeftAlt")
+            if(args.Key.ToString() == ConfigData.moveKey)
             {
                 isDraggingWindow = !isDraggingWindow;
             }
