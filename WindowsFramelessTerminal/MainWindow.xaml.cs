@@ -88,7 +88,10 @@ namespace WindowsFramelessTerminal
 
             WindowPointer = WindowsAPI.FindWindow(ConfigData.processName, null);
 
-            WindowsAPI.SetWindowPos(WindowPointer, 0, test.X, test.Y, test.Width, test.Height-1, 0);
+            WindowsAPI.GetWindowRect(WindowPointer, out CurrentWindowRectangle);
+
+            WindowsAPI.SetWindowPos(WindowPointer, 0, CurrentWindowRectangle.X, CurrentWindowRectangle.Y,
+                CurrentWindowRectangle.Width, CurrentWindowRectangle.Height-1, 0);
 
             if (WindowPointer != IntPtr.Zero)
             {
