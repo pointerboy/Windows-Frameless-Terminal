@@ -59,6 +59,7 @@ namespace WindowsFramelessTerminal
                 }
             }
         }
+
         KeyboardListener KListener = new KeyboardListener();
         public MainWindow()
         {
@@ -86,9 +87,6 @@ namespace WindowsFramelessTerminal
             }
 
             WindowPointer = WindowsAPI.FindWindow(ConfigData.processName, null);
-
-            System.Drawing.Rectangle test;
-            WindowsAPI.GetWindowRect(WindowPointer, out test);
 
             WindowsAPI.SetWindowPos(WindowPointer, 0, test.X, test.Y, test.Width, test.Height-1, 0);
 
