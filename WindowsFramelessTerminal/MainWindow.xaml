@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WindowsFramelessTerminal"
         mc:Ignorable="d"
-        Title="Windows Frameless Terminal" Height="162" Width="269">
+        Title="WFT" Height="162" Width="269" Icon="favicon (1).ico">
     <Grid Margin="0,0,2,4">
         <TabControl HorizontalAlignment="Left" Height="222" VerticalAlignment="Top" Width="364">
             <TabItem Header="Home">
-                <Grid Background="#FFE5E5E5">
-                    <Button x:Name="StartWatchBtn" Content="Start Watch&#xA;" HorizontalAlignment="Left" Margin="17,10,0,0" VerticalAlignment="Top" Width="170" Height="20" Click="Button_Click"/>
+                <Grid Background="#FF848DB0" Margin="0,0,103,89">
+                    <Button x:Name="StartWatchBtn" Content="Start Watch&#xA;" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="170" Height="25" Click="Button_Click" FontSize="14"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Config">

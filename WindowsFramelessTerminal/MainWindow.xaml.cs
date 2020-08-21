@@ -45,8 +45,10 @@ namespace WindowsFramelessTerminal
         }
         static void Loop()
         {
-            System.Drawing.Rectangle win;
-            WindowsAPI.GetWindowRect(WindowPointer, out win);
+            System.Drawing.Rectangle originalWindowRect;
+            WindowsAPI.GetWindowRect(WindowPointer, out originalWindowRect);
+
+            Console.WriteLine("Original Window: " +  originalWindowRect);
 
             while (true)
             {
@@ -55,7 +57,10 @@ namespace WindowsFramelessTerminal
                 if (isDraggingWindow && currentWindow == WindowPointer)
                 {
                     System.Drawing.Point xandy = WindowsAPI.GetCursorPosition();
-                    WindowsAPI.MoveWindow(WindowPointer, xandy.X, xandy.Y, win.Width, win.Height, true);
+                    
+                    WindowsAPI.MoveWindow(WindowPointer, xandy.X, xandy.Y, 600, 700, true);
+                    Console.WriteLine(originalWindowRect);
+                    Console.WriteLine(xandy);
                 }
             }
         }
