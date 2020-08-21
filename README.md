@@ -4,6 +4,11 @@
   <b>Remove boundaries of your favourite terminal!</b>
 </p>
 
+# Latest Update Notes (BETA 1.1)
+ - I'm activly working on fixing the resize issue.
+ - Reload feature is now added. You can modify the configuration file and reload the changes on the go, without having to restart the application.
+ - Some minor code and UI cleanups.
+ 
 # What is this?
 Windows Frameless Terminal or simply WFT is an application that allows user to replicate Linux terminal experience. As a preview of version (1.0), it allows users dragging the window by using a custom set key in the configuration file.
 
