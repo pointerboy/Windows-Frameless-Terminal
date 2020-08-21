@@ -14,7 +14,7 @@ namespace WindowsFramelessTerminal
 
         public static void ParseConfig()
         {
-            var parsed = JsonConvert.DeserializeObject<ConfigData>(GetConfigContents());
+           var parsed = JsonConvert.DeserializeObject<ConfigData>(GetConfigContents());
         }
 
         /// <summary>

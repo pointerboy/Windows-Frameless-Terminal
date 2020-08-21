@@ -28,6 +28,46 @@ namespace WindowsFramelessTerminal
 
         public static bool ui_FoundProcess;
 
+        private Thread windowManagerThread = new Thread(WindowManager);
+
+        private void UI_RefreshSettings()
+        {
+            ProcessLabel.Content = "Process name: " + ConfigData.processName;
+            MoveKeyLbl.Content = "Move key: " + ConfigData.moveKey;
+
+            StartWatchBtn.IsEnabled = false;
+        }
+
+        public void StartWatch()
+        {
+            WindowsReStyle();
+
+            if (!ui_FoundProcess)
+            {
+                MessageBox.Show("Could not find the process " + ConfigData.processName,
+                    "Windows Frameless Terminal", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+
+            }
+
+            WindowPointer = WindowsAPI.FindWindow(ConfigData.processName, null);
+
+            WindowsAPI.GetWindowRect(WindowPointer, out CurrentWindowRectangle);
+
+            WindowsAPI.SetWindowPos(WindowPointer, 0, CurrentWindowRectangle.X, CurrentWindowRectangle.Y,
+                CurrentWindowRectangle.Width, CurrentWindowRectangle.Height - 1, 0);
+
+            if (windowManagerThread.IsAlive) windowManagerThread.Abort();
+
+            if (WindowPointer != IntPtr.Zero) windowManagerThread.Start();
+
+            StartWatchBtn.IsEnabled = false;
+
+            uint processId;
+            WindowsAPI.GetWindowThreadProcessId(WindowPointer, out processId);
+            InfoLbl.Content = "Info: PID: " + Convert.ToString(processId);
+        }
+
         public static void WindowsReStyle()
         {
             Process[] Procs = Process.GetProcesses();
@@ -43,7 +83,7 @@ namespace WindowsFramelessTerminal
                 }
             }
         }
-        static void Loop()
+        static void WindowManager()
         {
             System.Drawing.Rectangle originalWindowRect;
             WindowsAPI.GetWindowRect(WindowPointer, out originalWindowRect);
@@ -81,34 +121,7 @@ namespace WindowsFramelessTerminal
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             WindowsReStyle();
-
-
-            if (!ui_FoundProcess)
-            {
-                MessageBox.Show("Could not find the process " + ConfigData.processName,
-                    "Windows Frameless Terminal", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-
-            }
-
-            WindowPointer = WindowsAPI.FindWindow(ConfigData.processName, null);
-
-            WindowsAPI.GetWindowRect(WindowPointer, out CurrentWindowRectangle);
-
-            WindowsAPI.SetWindowPos(WindowPointer, 0, CurrentWindowRectangle.X, CurrentWindowRectangle.Y,
-                CurrentWindowRectangle.Width, CurrentWindowRectangle.Height-1, 0);
-
-            if (WindowPointer != IntPtr.Zero)
-            {
-                Thread loop = new Thread(Loop);
-                loop.Start();
-            }
-
-            StartWatchBtn.IsEnabled = false;
-
-            uint processId;
-            WindowsAPI.GetWindowThreadProcessId(WindowPointer, out processId);
-            InfoLbl.Content = "Info: PID: " + Convert.ToString(processId);
+            StartWatch();
         }
 
         void KListener_KeyDown(object sender, RawKeyEventArgs args)
@@ -122,6 +135,13 @@ namespace WindowsFramelessTerminal
         private void Application_Exit(object sender, ExitEventArgs e)
         {
             KListener.Dispose();
+        }
+
+        private void ReloadSettingsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Config.ParseConfig();
+            UI_RefreshSettings();
+            StartWatch();
         }
 
     }
