@@ -141,7 +141,8 @@ namespace WindowsFramelessTerminal
         {
             Config.ParseConfig();
             UI_RefreshSettings();
-            StartWatch();
+
+            StartWatchBtn.IsEnabled = true;
         }
 
     }
