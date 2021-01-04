@@ -139,6 +139,9 @@ namespace WindowsFramelessTerminal
         {
             WindowsReStyle();
             StartWatch();
+
+            makeProcess.IsEnabled = false;
+            processComboBox.IsEnabled = false;
         }
 
         void KListener_KeyDown(object sender, RawKeyEventArgs args)
