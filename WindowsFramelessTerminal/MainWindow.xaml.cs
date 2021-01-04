@@ -122,12 +122,12 @@ namespace WindowsFramelessTerminal
 
             InitializeComponent();
 
-
-            ProcessLabel.Content = "Process name: " + ConfigData.processName;
-            MoveKeyLbl.Content += ConfigData.moveKey;
-
             Thread populteProcessList = new Thread(UI_PopulateProcessBox);
             populteProcessList.Start();
+
+            mainListView.Items.Add("Process Name:  " + ConfigData.processName);
+            mainListView.Items.Add("Move Key Combinaton:  " + ConfigData.moveKey);
+
 
         }
 
