@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace WindowsFramelessTerminal
 {
@@ -14,6 +15,15 @@ namespace WindowsFramelessTerminal
 
         public static void ParseConfig()
         {
+            var configContents = GetConfigContents();
+
+            if(configContents.Equals(String.Empty))
+            {
+                MessageBox.Show("Configuration file (config.json) is " +
+                    "missing from local directory. Please follow documentation and add one before starting the app.", "Configuration file missing", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return;
+            }
+
            var parsed = JsonConvert.DeserializeObject<ConfigData>(GetConfigContents());
         }
 
