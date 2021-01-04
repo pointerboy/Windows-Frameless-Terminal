@@ -12,5 +12,8 @@ namespace WindowsFramelessTerminal
     {
         [DataMember] public static string processName { get; set; }
         [DataMember] public static string moveKey { get; set; }
+
+        [DataMember] public static int staticWidth { get; set; }
+        [DataMember] public static int staticHeight { get; set; }
     }
 }

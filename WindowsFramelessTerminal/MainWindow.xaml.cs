@@ -35,6 +35,7 @@ namespace WindowsFramelessTerminal
             mainListView.Items.Clear();
             mainListView.Items.Add("Process Name:  " + ConfigData.processName);
             mainListView.Items.Add("Move Key Combinaton:  " + ConfigData.moveKey);
+            mainListView.Items.Add(String.Format("Static window size: ({0}, {1})", ConfigData.staticWidth, ConfigData.staticHeight));
 
             mainListView.SelectedItem = 0;
         }
@@ -114,11 +115,17 @@ namespace WindowsFramelessTerminal
 
                 if (isDraggingWindow && currentWindow == WindowPointer)
                 {
-                    System.Drawing.Point xandy = WindowsAPI.GetCursorPosition();
+                    System.Drawing.Point hostCursorPosition = WindowsAPI.GetCursorPosition();
                     
-                    WindowsAPI.MoveWindow(WindowPointer, xandy.X, xandy.Y, 600, 700, true);
-                    Console.WriteLine(originalWindowRect);
-                    Console.WriteLine(xandy);
+                    WindowsAPI.MoveWindow(WindowPointer, hostCursorPosition.X, hostCursorPosition.Y,
+                      ConfigData.staticWidth, ConfigData.staticHeight, true);
+
+                    Console.WriteLine(hostCursorPosition);
+                }
+                else if(isDraggingWindow == false && currentWindow == WindowPointer)
+                {
+                    WindowsAPI.GetWindowRect(WindowPointer, out originalWindowRect);
+                    Console.WriteLine("REC: " + originalWindowRect);
                 }
             }
         }
