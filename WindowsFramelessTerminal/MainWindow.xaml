@@ -28,16 +28,6 @@
                     <Label x:Name="InfoLbl" Content="WFT not started." HorizontalAlignment="Left" Margin="10,231,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Config">
-                <Grid Background="#FFE5E5E5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="29*"/>
-                    </Grid.ColumnDefinitions>
-                    <Label Name="ProcessLabel" Content="Label" HorizontalAlignment="Left" Margin="10,2,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-                    <Label x:Name="MoveKeyLbl" Content="Move key: " HorizontalAlignment="Left" Margin="10,26,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-                </Grid>
-            </TabItem>
         </TabControl>
 
     </Grid>
