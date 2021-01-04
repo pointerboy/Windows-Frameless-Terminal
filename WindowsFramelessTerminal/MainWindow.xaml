@@ -13,7 +13,7 @@
     <Grid Margin="0,0,2,4">
         <TabControl HorizontalAlignment="Left" Height="308" VerticalAlignment="Top" Width="465">
             <TabItem Header="Home">
-                <Grid Background="#FF848DB0" Margin="2,2,-2,-4">
+                <Grid Name="BackgroundGrid" Background="#FF848DB0" Margin="2,2,-2,-4">
                     <Button x:Name="StartWatchBtn" Content="Start Watch&#xA;" HorizontalAlignment="Left" Margin="278,213,0,0" VerticalAlignment="Top" Width="170" Height="33" Click="Button_Click" FontSize="14"/>
                     <ComboBox x:Name="processComboBox" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="258"/>
                     <Button x:Name="makeProcess" Content="Mark" HorizontalAlignment="Left" Margin="273,10,0,0" VerticalAlignment="Top" Width="175" Click="makeProcess_Click"/>

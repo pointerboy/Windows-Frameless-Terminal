@@ -16,7 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using System.Media;
 
 namespace WindowsFramelessTerminal
 {
@@ -82,6 +82,8 @@ namespace WindowsFramelessTerminal
             uint processId;
             WindowsAPI.GetWindowThreadProcessId(WindowPointer, out processId);
             InfoLbl.Content = "Info: PID: " + Convert.ToString(processId);
+
+            SystemSounds.Beep.Play();
         }
 
         public static void WindowsReStyle()
@@ -163,6 +165,7 @@ namespace WindowsFramelessTerminal
             UI_RefreshSettings();
 
             StartWatchBtn.IsEnabled = true;
+            SystemSounds.Beep.Play();
         }
 
         private void makeProcess_Click(object sender, RoutedEventArgs e)
@@ -172,6 +175,7 @@ namespace WindowsFramelessTerminal
 
             ConfigData.processName = processComboBox.SelectedItem.ToString();
             mainListView.Items.Add("Temproary process: " + ConfigData.processName);
+            SystemSounds.Beep.Play();
         }
     }
 }
