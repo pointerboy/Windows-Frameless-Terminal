@@ -127,8 +127,6 @@ namespace WindowsFramelessTerminal
 
             mainListView.Items.Add("Process Name:  " + ConfigData.processName);
             mainListView.Items.Add("Move Key Combinaton:  " + ConfigData.moveKey);
-
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
