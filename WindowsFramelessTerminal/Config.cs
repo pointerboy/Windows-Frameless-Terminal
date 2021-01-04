@@ -24,7 +24,7 @@ namespace WindowsFramelessTerminal
                 return;
             }
 
-           var parsed = JsonConvert.DeserializeObject<ConfigData>(GetConfigContents());
+            JsonConvert.DeserializeObject<ConfigData>(GetConfigContents());
         }
 
         /// <summary>

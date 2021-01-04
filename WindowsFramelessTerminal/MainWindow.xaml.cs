@@ -23,19 +23,19 @@ namespace WindowsFramelessTerminal
     public partial class MainWindow : Window
     {
         public static IntPtr WindowPointer;
-        public static bool isDraggingWindow = false;
+        public static bool IsDraggingWindow = false;
         public static System.Drawing.Rectangle CurrentWindowRectangle;
 
-        public static bool ui_FoundProcess;
+        public static bool UiFoundProcess;
 
-        private Thread windowManagerThread = new Thread(WindowManager);
+        private readonly Thread windowManagerThread = new Thread(WindowManager);
 
         private void UI_PopulateSettings()
         {
             mainListView.Items.Clear();
-            mainListView.Items.Add("Process Name:  " + ConfigData.processName);
-            mainListView.Items.Add("Move Key Combinaton:  " + ConfigData.moveKey);
-            mainListView.Items.Add(String.Format("Static window size: ({0}, {1})", ConfigData.staticWidth, ConfigData.staticHeight));
+            mainListView.Items.Add("Process Name:  " + ConfigData.ProcessName);
+            mainListView.Items.Add("Move Key Combinaton:  " + ConfigData.MoveKey);
+            mainListView.Items.Add(String.Format("Static window size: ({0}, {1})", ConfigData.StaticWidth, ConfigData.StaticHeight));
 
             mainListView.SelectedItem = 0;
         }
@@ -59,15 +59,15 @@ namespace WindowsFramelessTerminal
         {
             WindowsReStyle();
 
-            if (!ui_FoundProcess)
+            if (!UiFoundProcess)
             {
-                MessageBox.Show("Could not find the process " + ConfigData.processName,
+                MessageBox.Show("Could not find the process " + ConfigData.ProcessName,
                     "Windows Frameless Terminal", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
 
             }
 
-            WindowPointer = WindowsAPI.FindWindow(ConfigData.processName, null);
+            WindowPointer = WindowsAPI.FindWindow(ConfigData.ProcessName, null);
 
             WindowsAPI.GetWindowRect(WindowPointer, out CurrentWindowRectangle);
 
@@ -92,13 +92,13 @@ namespace WindowsFramelessTerminal
             Process[] Procs = Process.GetProcesses();
             foreach (Process proc in Procs)
             {
-                if (proc.ProcessName.StartsWith(ConfigData.processName))
+                if (proc.ProcessName.StartsWith(ConfigData.ProcessName))
                 {
                     IntPtr pFoundWindow = proc.MainWindowHandle;
                     int style = WindowsAPI.GetWindowLong(pFoundWindow, WindowsAPI.GWL_STYLE);
                     WindowsAPI.SetWindowLong(pFoundWindow, WindowsAPI.GWL_STYLE, (style & ~WindowsAPI.WS_CAPTION));
 
-                    ui_FoundProcess = true;
+                    UiFoundProcess = true;
                 }
             }
         }
@@ -113,16 +113,16 @@ namespace WindowsFramelessTerminal
             {
                 IntPtr currentWindow = WindowsAPI.GetForegroundWindow();
 
-                if (isDraggingWindow && currentWindow == WindowPointer)
+                if (IsDraggingWindow && currentWindow == WindowPointer)
                 {
                     System.Drawing.Point hostCursorPosition = WindowsAPI.GetCursorPosition();
                     
                     WindowsAPI.MoveWindow(WindowPointer, hostCursorPosition.X, hostCursorPosition.Y,
-                      ConfigData.staticWidth, ConfigData.staticHeight, true);
+                      ConfigData.StaticWidth, ConfigData.StaticHeight, true);
 
                     Console.WriteLine(hostCursorPosition);
                 }
-                else if(isDraggingWindow == false && currentWindow == WindowPointer)
+                else if(IsDraggingWindow == false && currentWindow == WindowPointer)
                 {
                     WindowsAPI.GetWindowRect(WindowPointer, out originalWindowRect);
                     Console.WriteLine("REC: " + originalWindowRect);
@@ -130,7 +130,7 @@ namespace WindowsFramelessTerminal
             }
         }
 
-        KeyboardListener KListener = new KeyboardListener();
+        readonly KeyboardListener KListener = new KeyboardListener();
         public MainWindow()
         {
             KListener.KeyDown += new RawKeyEventHandler(KListener_KeyDown);
@@ -155,9 +155,9 @@ namespace WindowsFramelessTerminal
 
         void KListener_KeyDown(object sender, RawKeyEventArgs args)
         {
-            if(args.Key.ToString() == ConfigData.moveKey)
+            if(args.Key.ToString() == ConfigData.MoveKey)
             {
-                isDraggingWindow = !isDraggingWindow;
+                IsDraggingWindow = !IsDraggingWindow;
             }
         }
 
@@ -177,11 +177,11 @@ namespace WindowsFramelessTerminal
 
         private void makeProcess_Click(object sender, RoutedEventArgs e)
         {
-            if (processComboBox.SelectedItem.ToString().Equals(String.Empty))
+            if (processComboBox.SelectedItem.ToString().Equals(string.Empty))
                 return;
 
-            ConfigData.processName = processComboBox.SelectedItem.ToString();
-            mainListView.Items.Add("Temproary process: " + ConfigData.processName);
+            ConfigData.ProcessName = processComboBox.SelectedItem.ToString();
+            mainListView.Items.Add("Temproary process: " + ConfigData.ProcessName);
             SystemSounds.Beep.Play();
         }
     }
