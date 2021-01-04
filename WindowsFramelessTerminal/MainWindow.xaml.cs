@@ -34,7 +34,7 @@ namespace WindowsFramelessTerminal
         {
             mainListView.Items.Clear();
             mainListView.Items.Add("Process Name:  " + ConfigData.ProcessName);
-            mainListView.Items.Add("Move Key Combinaton:  " + ConfigData.MoveKey);
+            mainListView.Items.Add("Move Key Combination:  " + ConfigData.MoveKey);
             mainListView.Items.Add(String.Format("Static window size: ({0}, {1})", ConfigData.StaticWidth, ConfigData.StaticHeight));
 
             mainListView.SelectedItem = 0;
@@ -181,7 +181,7 @@ namespace WindowsFramelessTerminal
                 return;
 
             ConfigData.ProcessName = processComboBox.SelectedItem.ToString();
-            mainListView.Items.Add("Temproary process: " + ConfigData.ProcessName);
+            mainListView.Items.Add("Temporary process: " + ConfigData.ProcessName);
             SystemSounds.Beep.Play();
         }
     }
