@@ -138,8 +138,8 @@ namespace WindowsFramelessTerminal
 
             InitializeComponent();
 
-            Thread populteProcessList = new Thread(UI_PopulateProcessBox);
-            populteProcessList.Start();
+            var populateProcessList = new Thread(UI_PopulateProcessBox);
+            populateProcessList.Start();
 
             UI_PopulateSettings();
         }
