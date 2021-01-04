@@ -17,7 +17,7 @@
                     <Button x:Name="StartWatchBtn" Content="Start Watch&#xA;" HorizontalAlignment="Left" Margin="278,213,0,0" VerticalAlignment="Top" Width="170" Height="33" Click="Button_Click" FontSize="14"/>
                     <ComboBox x:Name="processComboBox" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="258"/>
                     <Button x:Name="makeProcess" Content="Mark" HorizontalAlignment="Left" Margin="273,10,0,0" VerticalAlignment="Top" Width="175" Click="makeProcess_Click"/>
-                    <ListView x:Name="mainListView" HorizontalAlignment="Left" Height="100" Margin="10,53,0,0" VerticalAlignment="Top" Width="438" SelectedIndex="0">
+                    <ListView x:Name="mainListView" HorizontalAlignment="Left" Height="135" Margin="10,53,0,0" VerticalAlignment="Top" Width="438" SelectedIndex="0">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Option" HeaderStringFormat="Value"/>
