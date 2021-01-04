@@ -5,7 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WindowsFramelessTerminal"
         mc:Ignorable="d"
-        Title="WFT" Height="162" Width="269" Icon="favicon (1).ico" ResizeMode="CanMinimize">
+        Title="WFT" Height="162" Width="269" Icon="favicon (1).ico" ResizeMode="CanMinimize"
+        
+        
+        xmlns:ui="http://schemas.modernwpf.com/2019"
+        ui:WindowHelper.UseModernWindowStyle="True">
     <Grid Margin="0,0,2,4">
         <TabControl HorizontalAlignment="Left" Height="222" VerticalAlignment="Top" Width="364">
             <TabItem Header="Home">
