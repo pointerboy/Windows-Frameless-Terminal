@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WindowsFramelessTerminal"
         mc:Ignorable="d"
-        Title="Windows Frameless Terminal" Height="341" Width="473" Icon="favicon (1).ico" ResizeMode="CanMinimize"
+        Title="Windows Frameless Terminal" Height="341" Width="473" Icon="favicon.ico" ResizeMode="CanMinimize"
         
         
         xmlns:ui="http://schemas.modernwpf.com/2019"
