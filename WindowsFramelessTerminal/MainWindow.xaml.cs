@@ -167,6 +167,9 @@ namespace WindowsFramelessTerminal
 
         private void makeProcess_Click(object sender, RoutedEventArgs e)
         {
+            if (processComboBox.SelectedItem.ToString().Equals(String.Empty))
+                return;
+
             ConfigData.processName = processComboBox.SelectedItem.ToString();
             mainListView.Items.Add("Temproary process: " + ConfigData.processName);
         }
