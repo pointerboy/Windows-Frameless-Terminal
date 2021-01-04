@@ -30,6 +30,15 @@ namespace WindowsFramelessTerminal
 
         private Thread windowManagerThread = new Thread(WindowManager);
 
+        private void UI_PopulateSettings()
+        {
+            mainListView.Items.Clear();
+            mainListView.Items.Add("Process Name:  " + ConfigData.processName);
+            mainListView.Items.Add("Move Key Combinaton:  " + ConfigData.moveKey);
+
+            mainListView.SelectedItem = 0;
+        }
+
         private void UI_PopulateProcessBox()
         {
             Process[] processes = Process.GetProcesses();
@@ -41,9 +50,7 @@ namespace WindowsFramelessTerminal
 
         private void UI_RefreshSettings()
         {
-            ProcessLabel.Content = "Process name: " + ConfigData.processName;
-            MoveKeyLbl.Content = "Move key: " + ConfigData.moveKey;
-
+            UI_PopulateSettings();
             StartWatchBtn.IsEnabled = false;
         }
 
@@ -125,8 +132,7 @@ namespace WindowsFramelessTerminal
             Thread populteProcessList = new Thread(UI_PopulateProcessBox);
             populteProcessList.Start();
 
-            mainListView.Items.Add("Process Name:  " + ConfigData.processName);
-            mainListView.Items.Add("Move Key Combinaton:  " + ConfigData.moveKey);
+            UI_PopulateSettings();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
