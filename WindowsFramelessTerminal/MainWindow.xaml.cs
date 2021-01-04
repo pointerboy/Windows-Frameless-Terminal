@@ -30,6 +30,15 @@ namespace WindowsFramelessTerminal
 
         private Thread windowManagerThread = new Thread(WindowManager);
 
+        private void UI_PopulateProcessBox()
+        {
+            Process[] processes = Process.GetProcesses();
+            foreach (Process process in processes)
+            {
+                Dispatcher.Invoke((Action)(() => processComboBox.Items.Add(process.ProcessName)));
+            }
+        }
+
         private void UI_RefreshSettings()
         {
             ProcessLabel.Content = "Process name: " + ConfigData.processName;
@@ -116,6 +125,10 @@ namespace WindowsFramelessTerminal
 
             ProcessLabel.Content = "Process name: " + ConfigData.processName;
             MoveKeyLbl.Content += ConfigData.moveKey;
+
+            Thread populteProcessList = new Thread(UI_PopulateProcessBox);
+            populteProcessList.Start();
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -143,6 +156,11 @@ namespace WindowsFramelessTerminal
             UI_RefreshSettings();
 
             StartWatchBtn.IsEnabled = true;
+        }
+
+        private void makeProcess_Click(object sender, RoutedEventArgs e)
+        {
+            ConfigData.processName = processComboBox.SelectedItem.ToString();
         }
 
     }
