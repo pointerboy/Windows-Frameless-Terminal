@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindowsFramelessTerminal
+namespace WindowsFramelessTerminal.Core
 {
-    class WindowsAPI
+    // Windows API Wrapper
+    class CoreWindow
     {
-
         [DllImport("USER32.DLL")]
         public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
@@ -40,7 +40,6 @@ namespace WindowsFramelessTerminal
         [DllImport("user32.dll")]
         public static extern IntPtr GetForegroundWindow();
 
-
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
 
@@ -49,38 +48,8 @@ namespace WindowsFramelessTerminal
 
         [DllImport("user32.dll")]
         public static extern int GetWindowRect(IntPtr hwnd, out System.Drawing.Rectangle rect);
-
-        /// <summary>
-        /// Struct representing a point.
-        /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
-        public struct POINT
-        {
-            public int X;
-            public int Y;
-
-            public static implicit operator System.Drawing.Point(POINT point)
-            {
-                return new System.Drawing.Point(point.X, point.Y);
-            }
-        }
-
-        public static System.Drawing.Point GetCursorPosition()
-        {
-            POINT lpPoint;
-            GetCursorPos(out lpPoint);
-            return lpPoint;
-        }
-
-        /// <summary>
-        /// Retrieves the cursor's position, in screen coordinates.
-        /// </summary>
-        /// <see>See MSDN documentation for further information.</see>
-        [DllImport("user32.dll")]
-        public static extern bool GetCursorPos(out POINT lpPoint);
         [DllImport("user32.dll")]
         static extern bool EnableWindow(IntPtr hWnd, bool enable);
-
         [DllImport("user32.dll", EntryPoint = "SetWindowPos")]
         public static extern IntPtr SetWindowPos(IntPtr hWnd, int hWndInsertAfter, int x, int Y, int cx, int cy, int wFlags);
     }

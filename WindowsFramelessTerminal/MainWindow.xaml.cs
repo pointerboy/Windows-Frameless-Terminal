@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Media;
+using WindowsFramelessTerminal.Core;
 
 namespace WindowsFramelessTerminal
 {
@@ -29,6 +30,8 @@ namespace WindowsFramelessTerminal
         public static bool UiFoundProcess;
 
         private readonly Thread windowManagerThread = new Thread(WindowManager);
+
+        readonly KeyboardListener keyboardListener = new KeyboardListener();
 
         private void UI_PopulateSettings()
         {
@@ -67,11 +70,11 @@ namespace WindowsFramelessTerminal
 
             }
 
-            WindowPointer = WindowsAPI.FindWindow(ConfigData.ProcessName, null);
+            WindowPointer = CoreWindow.FindWindow(ConfigData.ProcessName, null);
 
-            WindowsAPI.GetWindowRect(WindowPointer, out CurrentWindowRectangle);
+            CoreWindow.GetWindowRect(WindowPointer, out CurrentWindowRectangle);
 
-            WindowsAPI.SetWindowPos(WindowPointer, 0, CurrentWindowRectangle.X, CurrentWindowRectangle.Y,
+            CoreWindow.SetWindowPos(WindowPointer, 0, CurrentWindowRectangle.X, CurrentWindowRectangle.Y,
                 CurrentWindowRectangle.Width, CurrentWindowRectangle.Height - 1, 0);
 
             if (windowManagerThread.IsAlive) windowManagerThread.Abort();
@@ -81,7 +84,7 @@ namespace WindowsFramelessTerminal
             StartWatchBtn.IsEnabled = false;
 
             uint processId;
-            WindowsAPI.GetWindowThreadProcessId(WindowPointer, out processId);
+            CoreWindow.GetWindowThreadProcessId(WindowPointer, out processId);
             InfoLbl.Content = "Info: PID: " + Convert.ToString(processId);
 
             SystemSounds.Beep.Play();
@@ -95,8 +98,8 @@ namespace WindowsFramelessTerminal
                 if (proc.ProcessName.StartsWith(ConfigData.ProcessName))
                 {
                     IntPtr pFoundWindow = proc.MainWindowHandle;
-                    int style = WindowsAPI.GetWindowLong(pFoundWindow, WindowsAPI.GWL_STYLE);
-                    WindowsAPI.SetWindowLong(pFoundWindow, WindowsAPI.GWL_STYLE, (style & ~WindowsAPI.WS_CAPTION));
+                    int style = CoreWindow.GetWindowLong(pFoundWindow, CoreWindow.GWL_STYLE);
+                    CoreWindow.SetWindowLong(pFoundWindow, CoreWindow.GWL_STYLE, (style & ~CoreWindow.WS_CAPTION));
 
                     UiFoundProcess = true;
                 }
@@ -105,35 +108,34 @@ namespace WindowsFramelessTerminal
         static void WindowManager()
         {
             System.Drawing.Rectangle originalWindowRect;
-            WindowsAPI.GetWindowRect(WindowPointer, out originalWindowRect);
+            CoreWindow.GetWindowRect(WindowPointer, out originalWindowRect);
 
             Console.WriteLine("Original Window: " +  originalWindowRect);
 
             while (true)
             {
-                IntPtr currentWindow = WindowsAPI.GetForegroundWindow();
+                IntPtr currentWindow = CoreWindow.GetForegroundWindow();
 
                 if (IsDraggingWindow && currentWindow == WindowPointer)
                 {
-                    System.Drawing.Point hostCursorPosition = WindowsAPI.GetCursorPosition();
+                    System.Drawing.Point hostCursorPosition = CoreMouse.GetCursorPosition();
                     
-                    WindowsAPI.MoveWindow(WindowPointer, hostCursorPosition.X, hostCursorPosition.Y,
+                    CoreWindow.MoveWindow(WindowPointer, hostCursorPosition.X, hostCursorPosition.Y,
                       ConfigData.StaticWidth, ConfigData.StaticHeight, true);
 
                     Console.WriteLine(hostCursorPosition);
                 }
                 else if(IsDraggingWindow == false && currentWindow == WindowPointer)
                 {
-                    WindowsAPI.GetWindowRect(WindowPointer, out originalWindowRect);
+                    CoreWindow.GetWindowRect(WindowPointer, out originalWindowRect);
                     Console.WriteLine("REC: " + originalWindowRect);
                 }
             }
         }
 
-        readonly KeyboardListener KListener = new KeyboardListener();
         public MainWindow()
         {
-            KListener.KeyDown += new RawKeyEventHandler(KListener_KeyDown);
+            keyboardListener.KeyDown += new RawKeyEventHandler(KListener_KeyDown);
             Config.ParseConfig();
 
             InitializeComponent();
@@ -163,7 +165,7 @@ namespace WindowsFramelessTerminal
 
         private void Application_Exit(object sender, ExitEventArgs e)
         {
-            KListener.Dispose();
+            keyboardListener.Dispose();
         }
 
         private void ReloadSettingsBtn_Click(object sender, RoutedEventArgs e)
