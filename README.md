@@ -1,8 +1,7 @@
 # Windows Frameless Terminal
 <p align="center">
-  <img src="http://www.vanilla-remastered.com/files/download.png"></br>
   <b>Remove boundaries of your favourite terminal!</b> <br>
-  <strong>Get the latest build from: <a href=https://github.com/pointerboy/Windows-Frameless-Terminal/releases/tag/beta1.1">here.</a></strong>
+  <strong>Get the latest build from: <a href=https://github.com/pointerboy/Windows-Frameless-Terminal/releases/tag/beta1.2">here.</a></strong>
 </p>
  
 # What is this?
@@ -13,12 +12,10 @@ You might want your terminal to looking better without a titlebar.
 
 # Preview
 - Git Bash (MinGW): <br>
-<img src="http://www.vanilla-remastered.com/files/term.PNG"><br>
-<img src="http://www.vanilla-remastered.com/files/editor.gif"><br>
+<img src="https://i.postimg.cc/dQ8k8ZtM/whole-Window.png"><br>
+<img src="https://i.postimg.cc/yxXDBtr6/example.gif"><br>
 
 (yes, that is the whole window)
 
 # How do I get started?
-- Get a fresh build from releases page.
-- Open up config.json (create the file if it does not exist) and follow the easy configuration tutorial on the Wiki (https://github.com/pointerboy/Windows-Frameless-Terminal/wiki/Configuration).
-- Run the application and click 'Start Watch'
+Head over to the <a href="https://github.com/pointerboy/Windows-Frameless-Terminal/wiki"><strong>Wiki</strong>.</a>
