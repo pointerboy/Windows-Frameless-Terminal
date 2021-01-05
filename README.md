@@ -11,7 +11,7 @@ Windows Frameless Terminal or simply WFT is an application that allows user to r
 You might want your terminal to looking better without a titlebar.
 
 # Preview
-- Git Bash (MinGW): <br>
+<p align="center">Git Bash (MinGW):</p> <br>
 <img src="https://i.postimg.cc/dQ8k8ZtM/whole-Window.png"><br>
 <img src="https://i.postimg.cc/yxXDBtr6/example.gif"><br>
 
