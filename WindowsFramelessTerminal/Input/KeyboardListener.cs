@@ -7,7 +7,7 @@ using System.Windows.Threading;
 using System.Collections.Generic;
 
 
-namespace WindowsFramelessTerminal
+namespace WindowsFramelessTerminal.Input
 {
     internal class KeyboardListener
     {

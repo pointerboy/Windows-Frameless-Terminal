@@ -6,8 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using WindowsFramelessTerminal.Input.Models;
 
-namespace WindowsFramelessTerminal
+namespace WindowsFramelessTerminal.Input
 {
     class Config
     {
