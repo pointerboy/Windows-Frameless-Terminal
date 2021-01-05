@@ -20,9 +20,9 @@ namespace WindowsFramelessTerminal.Input
 
             if(configContents.Equals(String.Empty))
             {
-                MessageBox.Show("Configuration file (config.json) is " +
-                    "missing from local directory. Please follow documentation and add one before starting the app.", "Configuration file missing", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                return;
+                MessageBox.Show("WFT cannot work without config.json file!\n\n" + 
+                    "Please follow documentation and add one before starting the app. You can visit the GitHub repository for a sample configuration file.", "Configuration file missing!", MessageBoxButton.OK, MessageBoxImage.Error);
+                Application.Current.Shutdown();
             }
 
             JsonConvert.DeserializeObject<ConfigData>(GetConfigContents());
