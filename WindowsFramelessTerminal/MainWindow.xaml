@@ -20,7 +20,7 @@
                     <ListView x:Name="mainListView" HorizontalAlignment="Left" Height="135" Margin="10,53,0,0" VerticalAlignment="Top" Width="438" SelectedIndex="0">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Option" HeaderStringFormat="Value"/>
+                                <GridViewColumn Header="Options" HeaderStringFormat="Value"/>
                             </GridView>
                         </ListView.View>
                     </ListView>

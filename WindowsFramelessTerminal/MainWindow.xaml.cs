@@ -34,6 +34,8 @@ namespace WindowsFramelessTerminal
             mainListView.Items.Add("Move Key Combination:  " + ConfigData.MoveKey);
             mainListView.Items.Add(String.Format("Static window size: ({0}, {1})", ConfigData.StaticWidth, ConfigData.StaticHeight));
 
+            mainListView.Items.Add(String.Format("Window Highlighter: ({0}, {1})", ConfigData.HighlighterColor, ConfigData.HighlighterBorderWidth));
+
             mainListView.SelectedItem = 0;
         }
 
@@ -196,5 +198,6 @@ namespace WindowsFramelessTerminal
             mainListView.Items.Add("Temporary process: " + ConfigData.ProcessName);
             SystemSounds.Beep.Play();
         }
+
     }
 }
