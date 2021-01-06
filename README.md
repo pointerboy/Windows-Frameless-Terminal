@@ -1,4 +1,4 @@
-# Windows Frameless Terminal
+# Windows Frameless Terminal (beta 1.2)
 <p align="center">
   <b>Remove boundaries of your favourite terminal!</b> <br>
   <strong>Get the latest build from: <a href=https://github.com/pointerboy/Windows-Frameless-Terminal/releases/tag/beta1.2">here.</a></strong>
