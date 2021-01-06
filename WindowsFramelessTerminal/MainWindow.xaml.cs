@@ -3,9 +3,14 @@ using System.Diagnostics;
 using System.Threading;
 using System.Windows;
 using System.Media;
+using System.Windows.Forms;
 using WindowsFramelessTerminal.Core;
 using WindowsFramelessTerminal.Input;
 using WindowsFramelessTerminal.Input.Models;
+using MessageBox = System.Windows.MessageBox;
+using System.Drawing;
+using System.Runtime.InteropServices;
+using WindowsFramelessTerminal.Experimental;
 
 namespace WindowsFramelessTerminal
 {
@@ -21,6 +26,7 @@ namespace WindowsFramelessTerminal
 
         readonly KeyboardListener keyboardListener = new KeyboardListener();
 
+        private static WindowHighlighter borderWindowHighlighter;
         private void UI_PopulateSettings()
         {
             mainListView.Items.Clear();
@@ -97,27 +103,43 @@ namespace WindowsFramelessTerminal
         {
             System.Drawing.Rectangle originalWindowRect;
             CoreWindow.GetWindowRect(WindowPointer, out originalWindowRect);
-
             Console.WriteLine("Original Window: " +  originalWindowRect);
+
+            bool isWindowBorderOn = false;
+
+            if (!string.IsNullOrEmpty(ConfigData.HighlighterColor) && ConfigData.HighlighterBorderWidth > 0)
+            {
+                borderWindowHighlighter =
+                    new WindowHighlighter(Color.FromName(ConfigData.HighlighterColor), Color.AliceBlue);
+                isWindowBorderOn = true;
+            }
 
             while (true)
             {
                 IntPtr currentWindow = CoreWindow.GetForegroundWindow();
+                Rectangle windowRectangle;
+                CoreWindow.GetWindowRect(WindowPointer, out windowRectangle);
+
+                windowRectangle.Width -= windowRectangle.X;
+                windowRectangle.Height -= windowRectangle.Y;
+
+                if (isWindowBorderOn)
+                {
+                    borderWindowHighlighter.Highlight(windowRectangle, false, ConfigData.HighlighterBorderWidth);
+                    borderWindowHighlighter.SetLocation(windowRectangle, false);
+                }
 
                 if (IsDraggingWindow && currentWindow == WindowPointer)
                 {
                     System.Drawing.Point hostCursorPosition = CoreMouse.GetCursorPosition();
-                    
+
                     CoreWindow.MoveWindow(WindowPointer, hostCursorPosition.X, hostCursorPosition.Y,
                       ConfigData.StaticWidth, ConfigData.StaticHeight, true);
 
-                    Console.WriteLine(hostCursorPosition);
+                     Console.WriteLine(hostCursorPosition);
                 }
-                else if(IsDraggingWindow == false && currentWindow == WindowPointer)
-                {
-                    CoreWindow.GetWindowRect(WindowPointer, out originalWindowRect);
-                    Console.WriteLine("REC: " + originalWindowRect);
-                }
+
+                if(currentWindow != WindowPointer && isWindowBorderOn) borderWindowHighlighter.Hide();
             }
         }
 

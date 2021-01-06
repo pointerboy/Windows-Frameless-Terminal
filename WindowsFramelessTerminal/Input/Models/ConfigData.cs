@@ -15,5 +15,8 @@ namespace WindowsFramelessTerminal.Input.Models
 
         [DataMember] public static int StaticWidth { get; set; }
         [DataMember] public static int StaticHeight { get; set; }
+
+        [DataMember(IsRequired = false, EmitDefaultValue = false) ] public static string HighlighterColor { get; set; }
+        [DataMember(IsRequired = false, EmitDefaultValue = false)] public static int HighlighterBorderWidth { get;set; }
     }
 }
