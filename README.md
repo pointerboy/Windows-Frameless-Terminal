@@ -13,7 +13,7 @@ You might want your terminal to looking better without a titlebar.
 # Preview
 <p align="center"><strong>Customizable window border (experimental MinGW)</strong></p> <br>
 <img src="https://i.postimg.cc/cJhjf09G/colorterminak.png"><br>
-<p align="center">Git Bash (MinGW):</p> <br>
+<p align="center">Git Bash (MinGW) without a border:</p> <br>
 <img src="https://i.postimg.cc/dQ8k8ZtM/whole-Window.png"><br>
 <img src="https://i.postimg.cc/yxXDBtr6/example.gif"><br>
 
