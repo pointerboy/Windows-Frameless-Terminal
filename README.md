@@ -5,12 +5,14 @@
 </p>
  
 # What is this?
-Windows Frameless Terminal or simply WFT is an application that allows user to replicate Linux terminal experience. As a preview of version (1.0), it allows users dragging the window by using a custom set key in the configuration file.
+Windows Frameless Terminal or simply WFT is an application that allows user to replicate Linux terminal experience. As a preview of version (1.0), it allows users dragging the window by using a custom set key in the configuration file. Recent versions (1.2+) feature a window customizable border and static window size.
 
 # Why?
 You might want your terminal to looking better without a titlebar.
 
 # Preview
+<p align="center"><strong>Customizable window border (experimental MinGW)</strong></p> <br>
+<img src="https://i.postimg.cc/cJhjf09G/colorterminak.png"><br>
 <p align="center">Git Bash (MinGW):</p> <br>
 <img src="https://i.postimg.cc/dQ8k8ZtM/whole-Window.png"><br>
 <img src="https://i.postimg.cc/yxXDBtr6/example.gif"><br>
