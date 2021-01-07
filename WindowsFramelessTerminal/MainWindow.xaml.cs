@@ -175,9 +175,12 @@ namespace WindowsFramelessTerminal
             }
         }
 
-        private void Application_Exit(object sender, ExitEventArgs e)
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
             keyboardListener.Dispose();
+            windowManagerThread.Abort();
+
+            System.Windows.Application.Current.Shutdown();
         }
 
         private void ReloadSettingsBtn_Click(object sender, RoutedEventArgs e)

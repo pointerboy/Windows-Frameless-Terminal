@@ -6,8 +6,6 @@
         xmlns:local="clr-namespace:WindowsFramelessTerminal"
         mc:Ignorable="d"
         Title="Windows Frameless Terminal" Height="341" Width="473" Icon="favicon.ico" ResizeMode="CanMinimize"
-        
-        
         xmlns:ui="http://schemas.modernwpf.com/2019"
         ui:WindowHelper.UseModernWindowStyle="True">
     <Grid Margin="0,0,2,4">
