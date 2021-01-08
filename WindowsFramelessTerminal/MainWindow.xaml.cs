@@ -27,6 +27,7 @@ namespace WindowsFramelessTerminal
         readonly KeyboardListener keyboardListener = new KeyboardListener();
 
         private static WindowHighlighter borderWindowHighlighter;
+
         private void UI_PopulateSettings()
         {
             mainListView.Items.Clear();
@@ -77,13 +78,14 @@ namespace WindowsFramelessTerminal
 
             if (WindowPointer != IntPtr.Zero) windowManagerThread.Start();
 
-            StartWatchBtn.IsEnabled = false;
+            StartWatchBtn.Content = "Stop Watch";
 
             uint processId;
             CoreWindow.GetWindowThreadProcessId(WindowPointer, out processId);
             InfoLbl.Content = "Info: PID: " + Convert.ToString(processId);
 
             SystemSounds.Beep.Play();
+
         }
 
         public static void WindowsReStyle()
@@ -160,6 +162,17 @@ namespace WindowsFramelessTerminal
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            if (windowManagerThread.IsAlive)
+            {
+                windowManagerThread.Abort();
+                StartWatchBtn.Content = "Start Watch";
+
+                makeProcess.IsEnabled = true;
+                processComboBox.IsEnabled = true;
+
+                return;
+            }
+
             WindowsReStyle();
             StartWatch();
 
