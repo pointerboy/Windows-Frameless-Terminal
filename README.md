@@ -10,6 +10,9 @@ Windows Frameless Terminal or simply WFT is an application that allows user to r
 # Why?
 You might want your terminal to looking better without a titlebar.
 
+# How do I get started?
+Head over to the <a href="https://github.com/pointerboy/Windows-Frameless-Terminal/wiki"><strong>Wiki</strong>.</a>
+
 # Preview
 <p align="center"><strong>Customizable window border (experimental MinGW)</strong></p> <br>
 <img src="https://i.postimg.cc/cJhjf09G/colorterminak.png"><br>
@@ -19,5 +22,4 @@ You might want your terminal to looking better without a titlebar.
 
 (yes, that is the whole window)
 
-# How do I get started?
-Head over to the <a href="https://github.com/pointerboy/Windows-Frameless-Terminal/wiki"><strong>Wiki</strong>.</a>
+
